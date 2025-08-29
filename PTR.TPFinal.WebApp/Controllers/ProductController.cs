@@ -7,7 +7,7 @@ namespace PTR.TPFinal.WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ProductController(IProductService productService) : ControllerBase
     {
         private readonly IProductService _productService = productService;
