@@ -1,0 +1,6 @@
+@PTR.TPFinal.WebApp_HostAddress = http://localhost:5155
+
+GET {{PTR.TPFinal.WebApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
