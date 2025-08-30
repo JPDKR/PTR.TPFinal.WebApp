@@ -1,4 +1,5 @@
-﻿using PTR.TPFinal.Domain.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PTR.TPFinal.Domain.Data;
 using PTR.TPFinal.Domain.Models;
 using PTR.TPFinal.Services.Repositories.Interfaces;
 
@@ -8,11 +9,21 @@ namespace PTR.TPFinal.Services.Repositories.Implementations
     {
         public Employee CreateEmployee(Employee entity)
         {
-            context.Attach(entity.Area);
-            context.Employees.Add(entity);
-            context.SaveChanges();
+            _context.Attach(entity.Area);
+            _context.Employees.Add(entity);
+            _context.SaveChanges();
 
             return entity;
+        }
+
+        public IEnumerable<Employee> GetAllInclude()
+        {
+            return [.. _context.Employees.Include(i => i.Area)];
+        }
+
+        public Employee GetByIdInclude(int id)
+        {
+            return _context.Employees.Include(i => i.Area).FirstOrDefault(w => w.Id == id)!;
         }
     }
 }

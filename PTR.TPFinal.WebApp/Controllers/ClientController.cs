@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PTR.TPFinal.Services.DTOs.Requests;
-using PTR.TPFinal.Services.DTOs.Responses;
 using PTR.TPFinal.Services.Interfaces;
 
 namespace PTR.TPFinal.WebApp.Controllers

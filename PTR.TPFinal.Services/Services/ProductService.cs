@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using PTR.TPFinal.Domain.Models;
-using PTR.TPFinal.Services.Repositories.Interfaces;
 using PTR.TPFinal.Services.DTOs.Requests;
 using PTR.TPFinal.Services.DTOs.Responses;
 using PTR.TPFinal.Services.Interfaces;
+using PTR.TPFinal.Services.Repositories.Interfaces;
 
 namespace PTR.TPFinal.Services.Services
 {
@@ -26,13 +26,13 @@ namespace PTR.TPFinal.Services.Services
 
         public IEnumerable<ProductResponseDto> GetAll()
         {
-            var Products = _productRepository.GetAll();
+            var Products = _productRepository.GetAllInclude();
             return _mapper.Map<IEnumerable<ProductResponseDto>>(Products);
         }
 
         public ProductResponseDto GetById(int id)
         {
-            Product? Product = _productRepository.GetById(id);
+            Product? Product = _productRepository.GetByIdInclude(id);
             return _mapper.Map<ProductResponseDto>(Product);
         }
     }
