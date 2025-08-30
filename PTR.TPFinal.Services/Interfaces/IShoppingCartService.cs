@@ -10,6 +10,6 @@ namespace PTR.TPFinal.Services.Interfaces
         Task<ShoppingCart?> GetByIdAsync(string id);
         Task<bool> UpdateAsync(ShoppingCart ShoppingCart, string id);
         Task DeleteAsync(string id);
-        Task<IEnumerable<ShoppingCart>> AddToShoppingCartAsync(CreateShoppingCartRequestDto request);
+        Task<decimal> AddToShoppingCartAsync(CreateShoppingCartRequestDto request);
     }
 }

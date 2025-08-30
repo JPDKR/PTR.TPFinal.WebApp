@@ -1,15 +1,19 @@
-﻿using MongoDB.Bson;
+﻿using AutoMapper;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using PTR.TPFinal.Domain.Data;
+using PTR.TPFinal.Domain.Enums;
 using PTR.TPFinal.Domain.Models;
-using PTR.TPFinal.Services.DTOs.Requests;
+using PTR.TPFinal.Services.DTOs.Responses;
 using PTR.TPFinal.Services.NoSQLRepositories.Interfaces;
+using PTR.TPFinal.Services.Patterns.Strategy;
+using System.Reflection.Metadata;
 
 namespace PTR.TPFinal.Services.NoSQLRepositories.Implementations
 {
-    public class ShoppingCartRepository(MongoDbContext context) : IShoppingCartRepository
+    public class ShoppingCartRepository(MongoDbContext contextMongo, ECommerceApiContext contextSQL) : IShoppingCartRepository
     {
-        private readonly IMongoCollection<ShoppingCart> _collection = context.ShoppingCart;
+        private readonly IMongoCollection<ShoppingCart> _collection = contextMongo.ShoppingCart;
         private const string IdField = "_id";
 
         public async Task<IEnumerable<ShoppingCart>> FindAsync(string fieldName, string fieldValue)
@@ -64,10 +68,19 @@ namespace PTR.TPFinal.Services.NoSQLRepositories.Implementations
             await _collection.DeleteOneAsync(filter);
         }
 
-        public Task<IEnumerable<ShoppingCart>> AddToShoppingCartAsync(CreateShoppingCartRequestDto request)
+        public async Task<decimal> AddToShoppingCartAsync(ShoppingCart request, int partialPrice)
         {
-            // ToDo
-            return null;
+            var client = contextSQL.Clients.FirstOrDefault(c => c.Id == request.ClientId) ?? throw new KeyNotFoundException("Client not found");
+            var employee = contextSQL.Employees.FirstOrDefault(e => e.Id == request.EmployeeId) ?? throw new KeyNotFoundException("Employee not found");
+
+            var strategy = PaymentFactory.Create((PaymentType)request.PaymentMethod);
+            var context = new PaymentContext(strategy);
+
+            request.TotalPrice = context.ExecutePayment(partialPrice);
+
+            await _collection.InsertOneAsync(request);
+
+            return request.TotalPrice;
         }
     }
 }

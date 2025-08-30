@@ -31,9 +31,10 @@ namespace PTR.TPFinal.Services.Services
             await _reviewRepository.DeleteAsync(id);
         }
 
-        public Task<IEnumerable<ShoppingCart>> AddToShoppingCartAsync(CreateShoppingCartRequestDto request)
+        public async Task<decimal> AddToShoppingCartAsync(CreateShoppingCartRequestDto request)
         {
-            throw new NotImplementedException();
+            var newShoppingCart = _mapper.Map<ShoppingCart>(request);
+            return await _reviewRepository.AddToShoppingCartAsync(newShoppingCart, request.PartialPrice);
         }
     }
 }
