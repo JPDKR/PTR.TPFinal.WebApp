@@ -1,6 +1,5 @@
 ﻿using PTR.TPFinal.Domain.Models;
 using PTR.TPFinal.Services.DTOs.Requests;
-using PTR.TPFinal.Services.DTOs.Responses;
 
 namespace PTR.TPFinal.Services.Interfaces
 {

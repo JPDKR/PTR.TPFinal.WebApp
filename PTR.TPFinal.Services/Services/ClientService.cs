@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using PTR.TPFinal.Domain.Auth;
 using PTR.TPFinal.Domain.Models;
-using PTR.TPFinal.Services.Repositories.Interfaces;
 using PTR.TPFinal.Services.DTOs.Requests;
 using PTR.TPFinal.Services.DTOs.Responses;
 using PTR.TPFinal.Services.Interfaces;
+using PTR.TPFinal.Services.Repositories.Interfaces;
 
 namespace PTR.TPFinal.Services.Services
 {

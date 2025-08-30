@@ -1,13 +1,10 @@
-﻿using AutoMapper;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using PTR.TPFinal.Domain.Data;
 using PTR.TPFinal.Domain.Enums;
 using PTR.TPFinal.Domain.Models;
-using PTR.TPFinal.Services.DTOs.Responses;
 using PTR.TPFinal.Services.NoSQLRepositories.Interfaces;
 using PTR.TPFinal.Services.Patterns.Strategy;
-using System.Reflection.Metadata;
 
 namespace PTR.TPFinal.Services.NoSQLRepositories.Implementations
 {

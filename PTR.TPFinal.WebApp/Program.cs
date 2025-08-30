@@ -1,11 +1,10 @@
+using Microsoft.Extensions.DependencyInjection;
 using PTR.TPFinal.Services.Profiles;
 using PTR.TPFinal.WebApp.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 const string AllowAllPolicy = "AllowAll";
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -17,6 +16,7 @@ builder.Services
     .AddValidators()
     .AddServices()
     .AddSwaggerWithJwt()
+    .AddAutoMapper() // Discutir en clase
     .AddJwtAuthentication(builder.Configuration);
 
 builder.Services.AddCors(options =>
@@ -27,16 +27,6 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader();
     });
-});
-
-// Discutir en clase
-builder.Services.AddAutoMapper(cfg =>
-{
-    cfg.AddProfile<AreaProfile>();
-    cfg.AddProfile<ClientProfile>();
-    cfg.AddProfile<EmployeeProfile>();
-    cfg.AddProfile<ProductProfile>();
-    cfg.AddProfile<ShoppingCartProfile>();
 });
 
 var app = builder.Build();

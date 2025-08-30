@@ -2,15 +2,16 @@
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using PTR.TPFinal.Domain.Data;
-using PTR.TPFinal.Services.Repositories.Implementations;
-using PTR.TPFinal.Services.Repositories.Interfaces;
-using PTR.TPFinal.Services.Validators;
+using PTR.TPFinal.Domain.Models.Configuration;
 using PTR.TPFinal.Services.DTOs.Requests;
 using PTR.TPFinal.Services.Interfaces;
-using PTR.TPFinal.Services.Services;
-using PTR.TPFinal.Domain.Models.Configuration;
 using PTR.TPFinal.Services.NoSQLRepositories.Implementations;
 using PTR.TPFinal.Services.NoSQLRepositories.Interfaces;
+using PTR.TPFinal.Services.Profiles;
+using PTR.TPFinal.Services.Repositories.Implementations;
+using PTR.TPFinal.Services.Repositories.Interfaces;
+using PTR.TPFinal.Services.Services;
+using PTR.TPFinal.Services.Validators;
 
 namespace PTR.TPFinal.WebApp.Extensions
 {
@@ -54,6 +55,20 @@ namespace PTR.TPFinal.WebApp.Extensions
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<AreaProfile>();
+                cfg.AddProfile<ClientProfile>();
+                cfg.AddProfile<EmployeeProfile>();
+                cfg.AddProfile<ProductProfile>();
+                cfg.AddProfile<ShoppingCartProfile>();
+            });
 
             return services;
         }

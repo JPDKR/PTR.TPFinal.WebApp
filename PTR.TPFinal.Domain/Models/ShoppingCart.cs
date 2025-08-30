@@ -16,7 +16,7 @@ namespace PTR.TPFinal.Domain.Models
         [BsonElement("createdAt")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         [BsonElement("products")]
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; } = [];
         [BsonElement("totalPrice")]
         public decimal TotalPrice { get; set; }
     }
