@@ -9,8 +9,8 @@ namespace PTR.TPFinal.Services.Profiles
     {
         public ShoppingCartProfile()
         {
-            //CreateMap<CreateShoppingCartRequestDto, ShoppingCart>().ReverseMap();
-            //CreateMap<ShoppingCart, ShoppingCartResponseDto>().ReverseMap();
+            CreateMap<CreateShoppingCartRequestDto, ShoppingCart>().ReverseMap();
+            CreateMap<ShoppingCart, ShoppingCartResponseDto>().ReverseMap();
         }
     }
 }

@@ -8,6 +8,9 @@ using PTR.TPFinal.Services.Validators;
 using PTR.TPFinal.Services.DTOs.Requests;
 using PTR.TPFinal.Services.Interfaces;
 using PTR.TPFinal.Services.Services;
+using PTR.TPFinal.Domain.Models.Configuration;
+using PTR.TPFinal.Services.NoSQLRepositories.Implementations;
+using PTR.TPFinal.Services.NoSQLRepositories.Interfaces;
 
 namespace PTR.TPFinal.WebApp.Extensions
 {
@@ -22,13 +25,35 @@ namespace PTR.TPFinal.WebApp.Extensions
             return services;
         }
 
+        public static IServiceCollection AddMongoDatabase(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.Configure<MongoDbConfiguration>(options =>
+            {
+                options.ConnectionString = configuration["MongoDbSettings:ConnectionString"]!;
+                options.Database = configuration["MongoDbSettings:DatabaseName"]!;
+            });
+
+            services.AddSingleton<MongoDbContext>();
+            services.AddSingleton<MongoDbInitializer>();
+
+            using (var scope = services.BuildServiceProvider().CreateScope())
+            {
+                var initializer = scope.ServiceProvider.GetRequiredService<MongoDbInitializer>();
+                initializer.Initialize();
+            }
+
+            return services;
+        }
+
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IAreaRepository, AreaRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
-            //services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 
             return services;
         }
@@ -48,7 +73,7 @@ namespace PTR.TPFinal.WebApp.Extensions
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IProductService, ProductService>();
-            //services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<ITokenService, TokenService>();
 
             return services;

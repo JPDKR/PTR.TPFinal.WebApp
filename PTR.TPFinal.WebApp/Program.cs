@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services
     .AddDatabase(builder.Configuration)
+    .AddMongoDatabase(builder.Configuration)
     .AddRepositories()
     .AddValidators()
     .AddServices()

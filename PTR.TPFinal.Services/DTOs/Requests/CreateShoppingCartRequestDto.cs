@@ -9,5 +9,6 @@ namespace PTR.TPFinal.Services.DTOs.Requests
         public int EmployeeId { get; set; }
         public ICollection<Product> Products { get; set; } = new HashSet<Product>();
         public PaymentType PaymentType { get; set; }
+        public int PartialPrice { get; set; }
     }
 }
