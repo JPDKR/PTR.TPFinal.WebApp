@@ -70,6 +70,12 @@ namespace PTR.TPFinal.Services.NoSQLRepositories.Implementations
             var client = contextSQL.Clients.FirstOrDefault(c => c.Id == request.ClientId) ?? throw new KeyNotFoundException("Client not found");
             var employee = contextSQL.Employees.FirstOrDefault(e => e.Id == request.EmployeeId) ?? throw new KeyNotFoundException("Employee not found");
 
+            foreach (var item in request.Products)
+            {
+                var product = contextSQL.Products.FirstOrDefault(c => c.Id == item.Id) ?? throw new KeyNotFoundException($"Product not found with id {item.Id}");
+                var area = contextSQL.Areas.FirstOrDefault(a => a.Id == item.Area.Id) ?? throw new KeyNotFoundException($"Area not found with id {product.Area.Id}");
+            }
+
             var strategy = PaymentFactory.Create((PaymentType)request.PaymentMethod);
             var context = new PaymentContext(strategy);
 
